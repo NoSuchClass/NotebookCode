@@ -1,4 +1,4 @@
-package com.bitongchong.notebook;
+package com.bitongchong.notebook.note1;
 
 /**
  * @author liuyuehe
