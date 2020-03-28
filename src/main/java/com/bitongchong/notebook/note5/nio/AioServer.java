@@ -16,7 +16,6 @@ import java.util.Set;
  */
 public class AioServer {
 
-    private int port;
     /**
      * 轮询器
      */
@@ -27,7 +26,6 @@ public class AioServer {
     private ByteBuffer buffer = ByteBuffer.allocate(1024);
 
     public AioServer(int port) {
-        this.port = port;
         try {
             ServerSocketChannel server = ServerSocketChannel.open();
             server.bind(new InetSocketAddress(port));

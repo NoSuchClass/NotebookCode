@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserX implements Serializable {
+    private static final long serialVersionUID = 5022563640219135448L;
     private String name;
     private int age;
     private Timestamp time;
