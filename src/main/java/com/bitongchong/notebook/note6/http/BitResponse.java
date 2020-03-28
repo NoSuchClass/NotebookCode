@@ -1,4 +1,4 @@
-package com.bitongchong.notebook.note6.tomcat.http;
+package com.bitongchong.notebook.note6.http;
 
 import java.io.IOException;
 import java.io.OutputStream;

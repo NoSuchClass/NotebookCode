@@ -1,8 +1,8 @@
-package com.bitongchong.notebook.note6.tomcat;
+package com.bitongchong.notebook.note6;
 
-import com.bitongchong.notebook.note6.tomcat.http.AbstractBitServlet;
-import com.bitongchong.notebook.note6.tomcat.http.BitRequest;
-import com.bitongchong.notebook.note6.tomcat.http.BitResponse;
+import com.bitongchong.notebook.note6.http.AbstractBitServlet;
+import com.bitongchong.notebook.note6.http.BitRequest;
+import com.bitongchong.notebook.note6.http.BitResponse;
 import com.bitongchong.notebook.util.ThreadPoolsUtil;
 
 import java.io.*;

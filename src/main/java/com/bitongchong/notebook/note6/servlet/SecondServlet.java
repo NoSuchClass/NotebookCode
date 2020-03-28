@@ -1,8 +1,8 @@
-package com.bitongchong.notebook.note6.tomcat.servlet;
+package com.bitongchong.notebook.note6.servlet;
 
-import com.bitongchong.notebook.note6.tomcat.http.AbstractBitServlet;
-import com.bitongchong.notebook.note6.tomcat.http.BitRequest;
-import com.bitongchong.notebook.note6.tomcat.http.BitResponse;
+import com.bitongchong.notebook.note6.http.AbstractBitServlet;
+import com.bitongchong.notebook.note6.http.BitRequest;
+import com.bitongchong.notebook.note6.http.BitResponse;
 
 import java.io.IOException;
 
