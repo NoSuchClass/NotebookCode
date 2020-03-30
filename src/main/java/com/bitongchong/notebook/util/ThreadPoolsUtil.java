@@ -11,8 +11,8 @@ public class ThreadPoolsUtil {
     private ExecutorService uploadPool;
 
     private ThreadPoolsUtil() {
-        uploadPool = new ThreadPoolExecutor(2, 16, 15, TimeUnit.MINUTES
-                , new ArrayBlockingQueue<>(1024), new NamedThreadFactory("UPLOAD"));
+        uploadPool = new ThreadPoolExecutor(5, 16, 15, TimeUnit.MINUTES
+                , new ArrayBlockingQueue<>(1024), new NamedThreadFactory("NOTE"));
     }
 
     /**

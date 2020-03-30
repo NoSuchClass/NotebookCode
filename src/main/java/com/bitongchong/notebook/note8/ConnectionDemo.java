@@ -29,13 +29,10 @@ public class ConnectionDemo {
     private static void func2() {
         try {
             CountDownLatch countDownLatch = new CountDownLatch(1);
-            ZooKeeper zooKeeper = new ZooKeeper("39.105.83.97:2181", 4000, new Watcher() {
-                @Override
-                public void process(WatchedEvent watchedEvent) {
-                    // 如果收到服务端的链接成功的响应时间
-                    if (Event.KeeperState.SyncConnected == watchedEvent.getState()) {
-                        countDownLatch.countDown();
-                    }
+            ZooKeeper zooKeeper = new ZooKeeper("39.105.83.97:2181", 4000, watchedEvent -> {
+                // 如果收到服务端的链接成功的响应时间
+                if (Watcher.Event.KeeperState.SyncConnected == watchedEvent.getState()) {
+                    countDownLatch.countDown();
                 }
             });
             // CONNECTING
