@@ -14,7 +14,7 @@ import java.util.Set;
  * @author liuyuehe
  * @date 2020/3/26 14:17
  */
-public class AioServer {
+public class NioServer {
 
     /**
      * 轮询器
@@ -25,7 +25,7 @@ public class AioServer {
      */
     private ByteBuffer buffer = ByteBuffer.allocate(1024);
 
-    public AioServer(int port) {
+    public NioServer(int port) {
         try {
             ServerSocketChannel server = ServerSocketChannel.open();
             server.bind(new InetSocketAddress(port));
@@ -39,7 +39,7 @@ public class AioServer {
     }
 
     public static void main(String[] args) {
-        AioServer server = new AioServer(8080);
+        NioServer server = new NioServer(8080);
         server.listen();
     }
 
