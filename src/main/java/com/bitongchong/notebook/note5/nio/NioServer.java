@@ -1,5 +1,7 @@
 package com.bitongchong.notebook.note5.nio;
 
+import com.bitongchong.notebook.util.ThreadPoolsUtil;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -24,6 +26,7 @@ public class NioServer {
      * 缓冲区
      */
     private ByteBuffer buffer = ByteBuffer.allocate(1024);
+    private boolean isAlive = false;
 
     public NioServer(int port) {
         try {
@@ -38,14 +41,11 @@ public class NioServer {
         }
     }
 
-    public static void main(String[] args) {
-        NioServer server = new NioServer(8080);
-        server.listen();
-    }
-
     public void listen() {
         try {
-            while (true) {
+            isAlive = true;
+            while (isAlive) {
+                System.out.println("server is available!");
                 selector.select();
                 Set<SelectionKey> keys = selector.selectedKeys();
                 Iterator<SelectionKey> selectionKeyIterator = keys.iterator();
@@ -59,6 +59,10 @@ public class NioServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void closeConnection() {
+        isAlive = false;
     }
 
     /**
@@ -89,6 +93,12 @@ public class NioServer {
             channel.write(ByteBuffer.wrap(("输出内容：" + content).getBytes()));
             channel.close();
         }
+    }
+
+
+    public static void main(String[] args) {
+        NioServer server = new NioServer(8080);
+        server.listen();
     }
 
 }
