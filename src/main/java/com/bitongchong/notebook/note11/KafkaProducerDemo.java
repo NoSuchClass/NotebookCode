@@ -1,11 +1,10 @@
 package com.bitongchong.notebook.note11;
 
 import lombok.SneakyThrows;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.*;
 
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author liuyuehe
@@ -14,8 +13,10 @@ import java.util.Properties;
 public class KafkaProducerDemo extends Thread {
     final private KafkaProducer<Integer, String> producer;
     final private String topic;
+    final private boolean isAsync;
 
-    public KafkaProducerDemo(String topic) {
+    public KafkaProducerDemo(String topic, boolean isAsync) {
+        this.isAsync = isAsync;
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "39.105.83.97:9092");
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaProducerDemo");
@@ -31,15 +32,26 @@ public class KafkaProducerDemo extends Thread {
     @SneakyThrows
     @Override
     public void run() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             String msg = "this is NO." + i + " message";
-            producer.send(new ProducerRecord<>(topic, msg));
-            System.out.println("message send, the content is : " + msg);
-            Thread.sleep(1000);
+            if (isAsync) {
+                // 同步
+                RecordMetadata recordMetadata = producer.send(new ProducerRecord<>(topic, msg)).get();
+                System.out.println("message send, the content is : " + msg);
+                System.out.println("the offset : " + recordMetadata.offset());
+            } else {
+                // 异步
+                producer.send(new ProducerRecord<>(topic, msg), (metadata, exception) -> {
+                    System.out.println("massage is " + msg + "the offset : " + metadata.offset());
+                });
+                System.out.println("message send, the content is : " + msg);
+            }
+            // Thread.sleep(1000);
         }
     }
     
-    public static void main(String[] args){
-        new KafkaProducerDemo("demo").start();
+    public static void main(String[] args) throws InterruptedException {
+        new KafkaProducerDemo("demo", true).start();
+        new CountDownLatch(1).await();
     }
 }
