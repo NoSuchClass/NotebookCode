@@ -1,4 +1,4 @@
-package com.bitongchong.notebook.note11;
+package com.bitongchong.notebook.note11.apiDemo;
 
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.producer.*;

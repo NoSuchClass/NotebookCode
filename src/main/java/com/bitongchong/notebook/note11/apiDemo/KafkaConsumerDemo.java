@@ -1,4 +1,4 @@
-package com.bitongchong.notebook.note11;
+package com.bitongchong.notebook.note11.apiDemo;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
