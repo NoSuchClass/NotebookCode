@@ -19,7 +19,7 @@ public class KafkaConsumerDemo extends Thread {
 
     public KafkaConsumerDemo(String topic) {
         Properties properties = new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "39.105.83.97:9092");
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "39.105.83.97:9093");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaConsumerDemo");
         // 消费者消费消息以后自动提交，只有当消息提交以后，该消息才不会被再次接收到
         // 还可以配合auto.commit.interval.ms控制自动提交的频率
