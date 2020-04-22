@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
  * @date 2020/3/24 13:25
  */
 public class SerializableTest implements Serializable {
+    private static final long serialVersionUID = -5685132349000933949L;
+
     public static void main(String[] args) throws CloneNotSupportedException, IOException, ClassNotFoundException {
         User user1 = new User("张三", 12, Timestamp.valueOf(LocalDateTime.now()));
         User user2 = user1.clone();

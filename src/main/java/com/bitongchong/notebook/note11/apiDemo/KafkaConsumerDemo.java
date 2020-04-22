@@ -21,7 +21,8 @@ public class KafkaConsumerDemo extends Thread {
         Properties properties = new Properties();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "39.105.83.97:9093");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaConsumerDemo");
-        // 消费者消费消息以后自动提交，只有当消息提交以后，该消息才不会被再次接收到
+        // 消费者消费消息以后自动提交，只有当消息提交以后，该消息才不会被再次接收到，
+        // 如果需要手动提交，那么可以通过consumer.commitSync() 或者 commitAsync()进行提交
         // 还可以配合auto.commit.interval.ms控制自动提交的频率
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
@@ -36,12 +37,12 @@ public class KafkaConsumerDemo extends Thread {
         consumer.subscribe(Collections.singletonList(topic));
     }
 
-
     @Override
     public void run() {
         while(true) {
             ConsumerRecords<Integer, String> consumerRecords = consumer.poll(Duration.ofSeconds(1));
             for (ConsumerRecord<Integer, String> consumerRecord : consumerRecords) {
+                consumer.commitSync();
                 System.out.println("the message received: " + consumerRecord.value());
             }
         }

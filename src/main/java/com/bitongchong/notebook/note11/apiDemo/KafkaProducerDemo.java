@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.*;
 
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author liuyuehe
@@ -23,20 +24,25 @@ public class KafkaProducerDemo extends Thread {
         properties.put(ProducerConfig.ACKS_CONFIG, "-1");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
                 , "org.apache.kafka.common.serialization.IntegerSerializer");
+        properties.put("log.segment.bytes", 100);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
                 , "org.apache.kafka.common.serialization.StringSerializer");
         this.producer = new KafkaProducer<>(properties);
         this.topic = topic;
     }
 
-    @SneakyThrows
     @Override
     public void run() {
         for (int i = 0; i < 10; i++) {
             String msg = "this is NO." + i + " message";
             if (isAsync) {
                 // 同步
-                RecordMetadata recordMetadata = producer.send(new ProducerRecord<>(topic, msg)).get();
+                RecordMetadata recordMetadata = null;
+                try {
+                    recordMetadata = producer.send(new ProducerRecord<>(topic, msg)).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("message send, the content is : " + msg);
                 System.out.println("the offset : " + recordMetadata.offset());
             } else {
